@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        var allTask = []
+        function bodyLoad() {
+            var todayDate = document.getElementById('Today_date');
+            var calendar = document.getElementById('calendar');
+
+
+            var date = new Date();
+            todayDate.innerHTML = date.toLocaleDateString();
+
+            calendar.addEventListener('change', function () {
+                var dates = calendar.value;
+                var current = new Date(dates);
+                todayDate.innerHTML = current.toLocaleDateString();
+            })
+
+
+        }
+        function addTask() {
+            var addBtn;
+            var taskInput = document.createElement('input');
+
+            document.getElementById('btnAdd').outerHTML = `<input type="checkbox" id="checkBox" checked></input>`
+            document.getElementById('addTaskBtn').outerHTML = `<input type="text" placeholder="Enter task" class="w-75 border border-primary" id="taskEnter" autofocus></input>`
+            addBtn = document.createElement('button');
+            addBtn.innerHTML = 'Add';
+            addBtn.className = `text-light bg-primary border border-0 align-items-center `
+            addBtn.style.paddingTop = "2px"
+            addBtn.style.paddingBottom = "2px"
+            document.querySelector('.taskSection').appendChild(addBtn);
+
+
+            addBtn.addEventListener('click', function () {
+                if (checkBox.checked == true) {
+                    var tasks = document.getElementById('taskEnter').value;
+                    if (tasks.length >= 1) {
+                        allTask = []
+                        allTask.push(tasks.trim())
+                        var Taskdiv = document.createElement('div');
+                        Taskdiv.className = `d-flex justify-content-between w-75 border border-1 my-3 p-3`
+
+                        for (var i = 0; i < allTask.length; i++) {
+                            var TaskSection = document.createElement('div');
+                            TaskSection.innerHTML = allTask[i];
+                            var RemoveButton = document.createElement('button')
+                            RemoveButton.style.border = "none"
+                            RemoveButton.innerHTML = `<span class="bi bi-x-lg  border-0 text-primary" id="removeElement"></span>`;
+                            Taskdiv.appendChild(TaskSection);
+                            Taskdiv.appendChild(RemoveButton);;
+
+
+                        }
+                        document.getElementById('List').appendChild(Taskdiv)
+
+
+                        RemoveButton.addEventListener('click', function () {
+
+
+                            var remove = TaskSection.innerHTML;
+                            var removeIndex = allTask.indexOf(remove)
+                            if (removeIndex >=-1) {
+                                allTask.splice(removeIndex, 1);
+                                document.getElementById('List').removeChild(Taskdiv);
+                            }
+                        })
+                        console.log(allTask);
+                        
+
+
+                    }
+                    else {
+                        alert('Please enter your task')
+                    }
+                }
+                else {
+                    alert("Please select checkbox")
+                }
+
+            })
+
+
+        }
+
+    </script>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+
+<body onload="bodyLoad()">
+    <div class="container-fuild mt-4 ms-5">
+        <div class="d-flex justify-content-between  align-items-center border-2 ">
+            <div class="d-flex align-items-center ms-2">
+                <div>
+                    <span class="bi bi-sun fs-5 mx-1  me-2"></span>
+                </div>
+                <div>
+                    <h4 class="me-1">My Day</h4>
+                </div>
+                <div>
+                    <button class="bi bi-three-dots mx-1 border-0"></button>
+                </div>
+            </div>
+           
+        </div>
+        <div class="container-fluid ">
+            <span>Date:<span id="Today_date"></span></span>
+            <span class="ms-2"><input type="date" min="2024-12-23" id="calendar"></span>
+        </div>
+        <div class="container-fluid  mt-4">
+            <div class="border border-1 p-2" id="TaskRead">
+                <div class="taskSection">
+                    <button class="bi bi-plus me-1 text-primary border border-0 fs-3 bg-light" onclick="addTask()"
+                        id="btnAdd"></button>
+                    <span class="text-primary" id="addTaskBtn">Add Task</span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid  mt-5 ms-5" id="List">
+
+
+    </div>
+</body>
+
+</html>
