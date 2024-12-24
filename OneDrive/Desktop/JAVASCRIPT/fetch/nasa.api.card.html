@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        function bodyLoad() {
+            fetch('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=cQKMPA4qLfPCzhr23mmRndBbY6PhBJCoaS8eMOlj')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    data.photos.map(function (detail) {
+                        var div = document.createElement('div');
+                        div.className=`border border-1 my-4`;
+                      div.innerHTML=`
+                      <img src=${detail.img_src} width="200" height="200" class="card-img-top">
+                      <div class="my-1"><span class="fw-bold">ID<span>:${detail.id}</div>
+                      <div class="my-1"><span class="fw-bold">Full Name<span>: ${detail.camera.full_name}</div>
+                      <div class="my-1"><span class="fw-bold">Launching Date<span>:${detail.rover.launch_date}</div>
+                      <div class="my-1"><span class="fw-bold">Landing Date<span>:${detail.rover.landing_date}</div>
+                      `
+                       
+document.getElementById('section').appendChild(div)
+
+                    })
+                })
+
+        }
+    </script>
+</head>
+
+<body onload="bodyLoad()">
+    <div class="container-fluid d-flex justify-content-between flex-wrap" id="section">
+
+    </div>
+
+</body>
+
+</html>

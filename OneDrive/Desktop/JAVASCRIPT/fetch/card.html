@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        function bodyLoad() {
+            fetch('../data/card.json')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    // console.log(data);
+                    data.map(function (product) {
+                        console.log(product);
+                        var tr = document.createElement('tr');
+                        tr.className=`my-2`
+                        var td_img = document.createElement('td');
+                        var td_price = document.createElement('td');
+                        var td_title = document.createElement('td');
+
+                        td_img.innerHTML= `<img src=${product.image} width="200" height="200">`;
+                        td_title.innerHTML = product.title;
+                        td_price.innerHTML = product.price;
+
+                        tr.appendChild(td_img)
+                        tr.appendChild(td_title)
+                        tr.appendChild(td_price)
+                        document.querySelector('tbody').appendChild(tr);
+
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+
+                })
+                .finally(function () {
+                    console.log("successful");
+
+                })
+
+        }
+    </script>
+</head>
+
+<body onload="bodyLoad()">
+    <div class="container-fluid">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>image</th>
+                    <th>title</th>
+                    <th>price</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

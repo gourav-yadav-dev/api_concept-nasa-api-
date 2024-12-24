@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        function bodyLoad() {
+            fetch('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=cQKMPA4qLfPCzhr23mmRndBbY6PhBJCoaS8eMOlj')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (detail) {
+
+                    detail.photos.map(function (data) {
+                        var tr = document.createElement('tr');
+                        var tdId = document.createElement('td');
+                        var tdImage = document.createElement('td');
+                        var tdName = document.createElement('td');
+                        var tdLunch = document.createElement('td');
+                        var tdLand = document.createElement('td');
+                        tdId.innerHTML = data.id;
+
+                        tdImage.innerHTML = `<img src=${data.img_src} height="100" width="100">`
+
+                        tdName.innerHTML = data.camera.full_name;
+                        tdLunch.innerHTML=`LanchDate:${data.rover.launch_date}`
+                        tdLand.innerHTML=`LandDate:${data.rover.landing_date}`;
+
+                        tr.appendChild(tdId)
+                        tr.appendChild(tdImage)
+                        tr.appendChild(tdName)
+                        tr.appendChild(tdLunch)
+                        tr.appendChild(tdLand)
+                        document.querySelector('tbody').appendChild(tr);
+
+
+
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+                    console.log("mission successful");
+
+                })
+
+        }
+    </script>
+</head>
+
+<body onload="bodyLoad()">
+    <div class="container-fluid">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>full-Name</th>
+                    <th>Lunching-Date</th>
+                    <th>Landing-Date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+
+        </table>
+
+    </div>
+</body>
+
+</html>
